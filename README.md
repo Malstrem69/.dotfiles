@@ -1,3 +1,3 @@
 # .dotfiles
  
- This repo will contain so,e config files
+ This repo will contain some config files
