@@ -1,0 +1,86 @@
+-- XMobar http://projects.haskell.org/xmobar/
+-- Font Awesome 5 otf https://archlinux.org/packages/community/any/otf-font-awesome/
+-- Font Awesome 5 ttf https://archlinux.org/packages/community/any/ttf-font-awesome/
+-- Font Awesome 4 otf https://aur.archlinux.org/packages/otf-font-awesome-4/
+-- Font Awesome 4 ttf https://aur.archlinux.org/packages/ttf-font-awesome-4/
+
+Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true,Font Awesome 5 Free Regular:pixelsize=14"
+       , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"
+                           , "xft:Font Awesome 5 Free Solid:pixelsize=13"
+                           , "xft:Font Awesome 5 Free Regular:pixelsize=13"         -- Tiling
+                           , "xft:Ubuntu:pixelsize=13:antialias=true:hinting=true"  -- Networks
+                           , "xft:Font Awesome 5 Brands:pixelsize=13"               -- Brand Icons                
+			   ]
+       , bgColor = "#212733"
+       , fgColor = "#ff6c6b"
+       , position = TopSize L 100 30
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , commands = [
+                    -- Time and date
+                      Run Date "<fc=#bae67e><fn=2></fn> %b %d %Y</fc> <fc=#212733> | |</fc> <fc=#f27983><fn=2></fn> %H:%M </fc>" "date" 50
+
+                      -- Network
+                    , Run Network "wlp2s0" ["-t", "<fn=2></fn> <rx> kb <fc=#212733> |</fc> <fn=2></fn> <tx> kb"] 20
+
+                      -- Cpu usage in percent
+                    , Run Cpu ["-t", "<total>%","-H","50","--high","red"] 20
+
+                    -- Cpu core temperature monitor
+                    , Run MultiCoreTemp
+                      ["-t", "<fn=2></fn> <avg> °C",
+                        "-L", "20", "-H", "80"
+                      ] 20
+
+                      -- Ram used in percent
+                    , Run Memory ["-t", "<fn=2></fn>  <used> / <usedratio>%"] 20
+
+                      -- Disk space free | System and external HDD's
+                    , Run DiskU [("/", "<fn=2></fn>  SSD: <free>")] [] 60
+                               -- , ("/mnt/4TBZ", "Z: <free>")
+                               -- , ("/mnt/4TBX", "X: <free> free")] [] 60
+
+                    -- System update (with yay)
+                    , Run Com ".xmonad/scripts/xmobar/sysupdate" [] "sysupdate" 36000
+
+                    -- UnsafeStdinReader
+                    , Run UnsafeStdinReader
+
+                    -- Ping
+                    , Run Com ".xmonad/scripts/xmobar/ping" [] "ping" 50
+
+                    -- Volume
+                    , Run Volume "default" "Master"
+                      ["-t","<status> <volume>%"
+                      , "--"
+                      , "-O", ""
+                      , "-o",""
+                      ] 10
+		    -- Battery
+		    , Run BatteryP ["BAT0"] ["-t", "<fn=2>\xf241</fn> <acstatus> <left>%",
+					     "-L", "10", "-H", "80", "-p", "3",
+					     "--", 
+					     "-o", "",
+					     "-O", "<fn=2> \xf1e6</fn> <timeleft> ", 
+					     "-i", "<fn=2> \xf1e6</fn>",
+					     "-L", "-15", "-H", "-5",
+					     "-l", "red", "-m", "blue", "-h", "green",
+					     "-a", "dunstify -u critical 'Battery running out!'",
+					     "-A", "10"] 50
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<fc=#212733> | | </fc> <fc=#73d0ff><fn=2></fn></fc> \
+       \<fc=#212733> | </fc> %UnsafeStdinReader% \
+       \<fc=#212733> | </fc>  <fc=#73d0ff> <action=`alacritty -e htop`>%multicoretemp% / %cpu%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#d4bfff> <action=`alacritty -e htop`><fn=2></fn> %ping% ms</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#73d0ff> %wlp2s0% </fc> } \
+       \<fc=#212733> | </fc>{ <fc=#f1fa8c> %battery% </fc> \
+       \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e watch df -h`>%disku%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#d4bfff><fn=2></fn>  <action=`alacritty -e yay -Syu`>%sysupdate%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#95e6cb> <fn=2></fn> %default:Master% </fc> \
+       \<fc=#212733> | </fc>  %date% <fc=#212733> | | </fc>" 
+       }
