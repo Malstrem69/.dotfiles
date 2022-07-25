@@ -1,0 +1,12 @@
+#+title: Docker Notes
+#+DESCRIPTION: few notes about work and so on
+
+* To update existing docker image
+ + docker pull imagename:tag
+   (example: docler pull amazoncorrentto:11.0.13)
+ + docker ps
+ + docker run -it IMAGE /bin/bash
+   - update cuurent image how you want
+   - ctrl+p+q
+ + docker ps
+ + docker commit IMAGE newImageName:tag

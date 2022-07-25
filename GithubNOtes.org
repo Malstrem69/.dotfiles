@@ -1,0 +1,19 @@
+#+title: Github N Otes
+
+* Deleting branches
+** Delete local branch
+ - git branch -d BranchName
+** Delete remote branch
+ - git push origin --delete BranchName
+
+* Creating branches
+** Branch from another branch
+- git checkout branch1
+- git checkout -b subbranch_of_b1 branch1
+
+* Commits
+** Squash commits
+- git reset --soft HEAD~$(git rev-list --count HEAD ^master)
+- git add -A
+- git commit -m "one commit on yourBranch"`
+- git push --force

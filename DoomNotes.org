@@ -1,0 +1,34 @@
+#+TITLE: Xmonad info
+#+DESCRIPTION: Info, config, keybindings etc.
+
+* Keybinding for all the things
+
+** Programmes to launch with startup hook
+
+** Moving between windows and workspaces
+
+| Keybinding         | Description                          |
+|--------------------+--------------------------------------|
+| Alt+d              | To select word                       |
+| Alt+d (once again) | Will select another word down stream |
+| Alt+uparrow+d      | Will select another werd upstream    |
+| Shifr+R            | To select all the words at once      |
+| Ctrl+N/Ctrl+P      | To move between selected words       |
+|                    |                                      |
+
+NOTE: Also works with visual selection mode (v)
+
+** Scratchpaading and all the things wich I don`t undesrtand normally for now
+
+
+
+
+** Dmenu thing
+
+* Programmes
+
+rclone - to mount any cloud service into system
+packages:
+- rclone
+- fuse
+- rclone-browser(AUR)
